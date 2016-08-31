@@ -165,7 +165,7 @@ class VendingMachine
     if @available_items.has_key?(item)
       if @available_items[item]["price"] <= current_money_total
         if @available_items[item]["stock"] > 0
-          t_actionable, change_a = issue_change(@available_items[item]["price"])
+          t_actionable, change_a = calculate_change(current_money_total - @available_items[item]["price"])
           if t_actionable
             issue_item(item)
             @current_transaction[:current_money] = Array.new
@@ -173,8 +173,6 @@ class VendingMachine
             change_a.each{|c| print "#{c},"} unless change_a.empty?
             print "#{item}]\n"
           else
-            # Until I fix the crazy ruby floats thing.
-            # This will not be triggered.
             puts "We can not complete the transaction. Change can not be given."
             return_money
           end
@@ -193,12 +191,6 @@ class VendingMachine
     end
   end
 
-  def issue_change(price)
-    # issue change.
-    @current_transaction[:change_required] = current_money_total - price
-    return calculate_change
-  end
-
   def issue_item(item)
     # -1 from stock.
     # Print Item to console to mimic issue.
@@ -213,8 +205,7 @@ class VendingMachine
     return total
   end
 
-  def calculate_change
-    rn=@current_transaction[:change_required]
+  def calculate_change(rn)
     return_array = Array.new
     transaction_actionable_value = true
 
@@ -263,7 +254,6 @@ class VendingMachine
         break
       end
     end
-    @current_transaction[:change_required] = 0
     return transaction_actionable_value, return_array
   end
 
@@ -273,7 +263,7 @@ class VendingMachine
 
   private :change_item_price, :update_stock, :initialize_item
   private :currency_instock?, :calculate_change, :current_money_total
-  private :issue_item, :issue_change
+  private :issue_item
 end
 
 
