@@ -93,7 +93,7 @@ class VendingMachine
       # We need to set the price. Could be a new price.
       # TBH we don't really care what the price is as long
       # as it is set.
-      change_item_cost(item,hash)
+      change_item_price(item,hash)
       # Update the stock.
       update_stock(item,hash)
     }
@@ -103,7 +103,7 @@ class VendingMachine
     @available_items[item] = { "stock" => 0, "price" => 0 } unless @available_items.has_key?(item)
   end
   
-  def change_item_cost(item,hash)
+  def change_item_price(item,hash)
       @available_items[item]["price"] = hash["price"] if hash.has_key?("price")
   end
 
@@ -271,7 +271,7 @@ class VendingMachine
     return @current_money[name] > 0
   end
 
-  private :change_item_cost, :update_stock, :initialize_item
+  private :change_item_price, :update_stock, :initialize_item
   private :currency_instock?, :calculate_change, :current_money_total
   private :issue_item, :issue_change
 end
