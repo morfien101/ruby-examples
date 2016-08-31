@@ -193,8 +193,7 @@ class VendingMachine
   def issue_change(price)
     # issue change.
     @current_transaction[:change_required] = current_money_total - price
-    change_array, transaction_actionable = calculate_change
-    return change_array, transaction_actionable
+    return calculate_change
   end
 
   def issue_item(item)
@@ -261,6 +260,7 @@ class VendingMachine
         break
       end
     end
+    @current_transaction[:change_required] = 0
     return transaction_actionable_value, return_array
   end
 
