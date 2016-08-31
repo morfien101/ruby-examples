@@ -149,7 +149,12 @@ class VendingMachine
         returned_coins << coin
       }
       @current_transaction[:current_money] = Array.new
-      print "#{returned_coins}\n"
+      print "["
+      returned_coins.each_index{|i| 
+        print returned_coins[i]
+        print "," unless returned_coins[i + 1].nil?
+      }
+      print "]\n"
     end
   end
 
