@@ -270,6 +270,25 @@ end
 # Testing actions.
 vendingmachine = VendingMachine.new
 vendingmachine.refill_money({
+    "nickel" => 0,
+    "dime" => 0,
+    "quater" => 0,
+    "dollar" => 0
+  })
+vendingmachine.refill_items({
+    "A" => { "stock" => 10, "price" => 0.65 },
+    "B" => { "stock" => 10, "price" => 1},
+    "C" => { "stock" => 10, "price" => 1.50}
+  })
+["dollar"].each{|c|
+  vendingmachine.insert_coin(c)
+}
+vendingmachine.vend_item("A")
+
+
+
+vendingmachine = VendingMachine.new
+vendingmachine.refill_money({
     "nickel" => 500,
     "dime" => 500,
     "quater" => 500,
@@ -280,8 +299,8 @@ vendingmachine.refill_items({
     "B" => { "stock" => 10, "price" => 1},
     "C" => { "stock" => 10, "price" => 1.50}
   })
-#vendingmachine.current_available_change
-#vendingmachine.current_available_items
+vendingmachine.current_available_change
+vendingmachine.current_available_items
 vendingmachine.return_money
 ["quater","quater","quater","quater"].each{|c|
   vendingmachine.insert_coin(c)
@@ -297,7 +316,7 @@ vendingmachine.vend_item("A")
 vendingmachine.vend_item("A")
 vendingmachine.return_money
 
-(["dollar"]*100).each{|c|
+(["dollar"]*25).each{|c|
   vendingmachine.insert_coin(c)
 }
 vendingmachine.vend_item("A")
