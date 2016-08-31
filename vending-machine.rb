@@ -104,9 +104,7 @@ class VendingMachine
   end
   
   def change_item_cost(item,hash)
-    if hash.has_key?("price")
-      @available_items[item]["price"]=hash["price"]
-    end
+      @available_items[item]["price"] = hash["price"] if hash.has_key?("price")
   end
 
   def update_stock(item,hash)
